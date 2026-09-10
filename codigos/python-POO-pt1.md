@@ -52,18 +52,14 @@ class Aluno:
     def __init__(self, nome, nota):
         self.nome = nome
         self.nota = nota
+nomeA = input("Nome do aluno: ")
+notaA = float(input("Nota do Aluno: "))
+aluno1 = Aluno(nomeA, notaA)
 
-Aluno1 = Aluno("Rodrigo Faro", 10)
-print(f"Nome: {Aluno1.nome} ")
-print(f"Nota: {Aluno1.nota} ")
+print(f"O aluno(a) foi aprovado com {aluno1.nota}" if aluno1.nota >= 6 else f"O aluno(a) foi reprovado com {aluno1.nota}")
 
-nota = Aluno1.nota
-
-if nota >= 6:
-  print("Aluno Aprovado")
-
-else:
-    print("Aluno Reprovado")
+# Preferi não usar.
+# print(f"Aprovado? {bool(aluno1.nota >=6)}")
 ```
 
 **Ex. 4**
@@ -76,15 +72,16 @@ class retangulo:
         self.largura = largura
         self.altura = altura
 
-  def calcular_perimetro(self, largura, altura):
+  def calcular_perimetro(self):
         return  2 * (self.largura + self.altura)
 
-retangulo = retangulo(5,10)
-perimetro = retangulo.calcular_perimetro(2, 5)
+larguraobj = float(input("Largura: "))
+alturaobj = float(input("Altura: "))
 
-print(f"largura: {retangulo.largura}")
-print(f"altura: {retangulo.altura}")
-print(f"perimetro: {perimetro}")
+retangulo = retangulo(larguraobj, alturaobj)
+perimetro = retangulo.calcular_perimetro()
+
+print(f"Largura: {retangulo.largura}, Altura: {retangulo.altura}, Perimetro: {perimetro}")
 
 ```
 
