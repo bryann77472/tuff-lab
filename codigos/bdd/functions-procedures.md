@@ -191,7 +191,7 @@ when calcular_media(nota1, nota2) >= 6 then 'aprovado'
 when calcular_media(nota1, nota2) >= 4 then 'recuperação' 
 else 'reprovado' 
    end as situacao 
-from alunos 
+from aluno 
 where id = id_aluno; 
 end $$ 
 
