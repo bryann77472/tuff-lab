@@ -1,0 +1,97 @@
+/* ============================================================
+   BLOODMACH — shop.css
+   Loja, abas, cards de peça, preview do V1.
+   ============================================================ */
+
+.shop{ height:100%; display:grid; grid-template-rows:auto auto 1fr auto; }
+.shop-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  padding:12px 16px; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#0d1410,#090d0a);
+}
+.shop-brand{ display:flex; align-items:center; gap:10px; }
+.shop-brand h2{ font-size:.86rem; letter-spacing:.26em; text-transform:uppercase; color:var(--green); }
+.shop-wallet{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.wallet{
+  display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border:1px solid var(--line2);
+  background:#120b0d; font-size:.8rem; font-variant-numeric:tabular-nums;
+}
+.wallet .w-ico{ color:var(--brass); }
+.wallet.core .w-ico{ color:var(--crimson2); }
+
+.tabs{ display:flex; gap:0; border-bottom:1px solid var(--line); background:#0d0809; overflow-x:auto; }
+.tab{
+  padding:11px 18px; background:transparent; border:0; border-right:1px solid var(--line);
+  color:var(--ash); font-family:var(--font-mono); font-size:.78rem; letter-spacing:.18em;
+  text-transform:uppercase; cursor:pointer; white-space:nowrap;
+}
+.tab:hover{ color:var(--bone); background:#170d10; }
+.tab.on{ color:#fff; background:#1a0e12; box-shadow: inset 0 -2px 0 var(--crimson); }
+.tab .tcount{ font-size:.62rem; color:var(--crimson2); margin-left:6px; }
+
+.shop-body{ overflow:auto; padding:16px; }
+.shop-layout{ display:grid; grid-template-columns: 1fr 300px; gap:16px; align-items:start; }
+@media (max-width:940px){ .shop-layout{ grid-template-columns:1fr; } }
+
+.shop-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:12px; }
+
+.card{
+  border:1px solid var(--line); background:linear-gradient(180deg,#1b1114,#120b0e);
+  display:flex; flex-direction:column; position:relative; overflow:hidden;
+}
+.card.equipped{ border-color:var(--crimson); }
+.card.locked{ opacity:.55; }
+.card-art{
+  height:120px; display:grid; place-items:center; border-bottom:1px solid var(--line);
+  background:radial-gradient(80% 100% at 50% 120%, rgba(216,31,58,.18), transparent 70%), #0d0809;
+  position:relative; overflow:hidden;
+}
+.card-art svg{ height:92%; width:auto; }
+.card-art .lockveil{
+  position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:10px;
+  font-size:.66rem; letter-spacing:.1em; color:var(--ash); text-transform:uppercase;
+  background:rgba(6,4,5,.72);
+}
+.card-body{ padding:10px 12px; display:flex; flex-direction:column; gap:6px; flex:1 1 auto; }
+.card-name{ font-size:.86rem; letter-spacing:.1em; text-transform:uppercase; display:flex; justify-content:space-between; gap:8px; align-items:center; }
+.card-role{ font-size:.68rem; color:var(--ash); }
+.card-passive{ font-size:.68rem; color:var(--brass); }
+.card-passive b{ letter-spacing:.1em; }
+.card-stats{ display:flex; flex-wrap:wrap; gap:4px; }
+.card-moves{ display:flex; flex-direction:column; gap:2px; margin-top:2px; }
+.card-moves .cm{ font-size:.68rem; color:var(--ash); display:flex; gap:6px; }
+.card-moves .cm b{ color:var(--bone); font-weight:600; }
+.card-foot{ margin-top:auto; padding-top:8px; display:flex; gap:8px; align-items:center; justify-content:space-between; }
+.price{ font-size:.8rem; color:var(--brass); font-variant-numeric:tabular-nums; }
+.price.cant{ color:var(--bad); }
+.card-actions{ display:flex; gap:6px; }
+.card-actions .btn{ flex:1 1 auto; }
+
+.shop-side{ display:flex; flex-direction:column; gap:12px; position:sticky; top:0; }
+.preview{
+  border:1px solid var(--line); background:linear-gradient(180deg,#150d10,#0c0709); padding:12px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.preview-stage{
+  height:200px; display:grid; place-items:center; position:relative; overflow:hidden;
+  background:radial-gradient(70% 80% at 50% 100%, rgba(216,31,58,.2), transparent 70%);
+}
+.preview-stage svg{ height:100%; width:auto; animation: hover 4s ease-in-out infinite; }
+@keyframes hover{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-6px) } }
+.preview-stats{ font-size:.72rem; color:var(--ash); display:grid; grid-template-columns:1fr auto; gap:2px 10px; }
+.preview-stats b{ color:var(--bone); font-weight:600; }
+.preview-arms{ display:flex; gap:4px; flex-wrap:wrap; }
+.pa{ font-size:.62rem; padding:2px 6px; border:1px solid var(--line2); text-transform:uppercase; letter-spacing:.08em; }
+
+.shop-foot{
+  padding:10px 16px; border-top:1px solid var(--line); display:flex; justify-content:space-between;
+  align-items:center; gap:10px; flex-wrap:wrap; font-size:.72rem; color:var(--ash);
+}
+
+.cmp{ display:grid; grid-template-columns:auto 1fr 1fr; gap:2px 10px; font-size:.72rem; margin-top:6px; }
+.cmp .c-h{ color:var(--ash2); }
+.cmp .c-up{ color:var(--ok); }
+.cmp .c-dn{ color:var(--bad); }
+
+.trainer{ border:1px dashed var(--line2); padding:12px; text-align:center; }
+.trainer .t-hp{ margin:8px 0; }

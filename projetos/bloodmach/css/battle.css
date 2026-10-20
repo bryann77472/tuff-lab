@@ -1,0 +1,195 @@
+/* ============================================================
+   BLOODMACH — battle.css
+   Arena, sprites, barras, intenções, movimentos, parry.
+   ============================================================ */
+
+.battle{
+  height:100%; display:grid;
+  grid-template-rows: minmax(0,1fr) auto auto;
+  position:relative; overflow:hidden;
+}
+.battle.shake-1{ animation: sh1 .22s; }
+.battle.shake-2{ animation: sh2 .3s; }
+.battle.shake-3{ animation: sh3 .42s; }
+@keyframes sh1{ 0%,100%{transform:none} 25%{transform:translate(3px,-2px)} 50%{transform:translate(-3px,2px)} 75%{transform:translate(2px,1px)} }
+@keyframes sh2{ 0%,100%{transform:none} 20%{transform:translate(-6px,3px)} 40%{transform:translate(5px,-4px)} 60%{transform:translate(-4px,-2px)} 80%{transform:translate(3px,3px)} }
+@keyframes sh3{ 0%,100%{transform:none} 15%{transform:translate(-10px,5px)} 30%{transform:translate(9px,-6px)} 45%{transform:translate(-8px,-4px)} 60%{transform:translate(7px,6px)} 80%{transform:translate(-4px,3px)} }
+
+/* ---------------- ARENA ---------------- */
+.arena{
+  position:relative; overflow:hidden;
+  background:
+    radial-gradient(120% 70% at 50% 100%, rgba(120,20,35,.18), transparent 60%),
+    linear-gradient(180deg,#100a0c 0%, #170d10 60%, #0c0708 100%);
+  border-bottom:1px solid var(--line);
+}
+.arena .arena-bg{ position:absolute; inset:0; opacity:.35; pointer-events:none; }
+.arena .arena-bg svg{ width:100%; height:100%; display:block; }
+.arena-floor{
+  position:absolute; left:0; right:0; bottom:0; height:34%;
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,.55));
+  border-top:1px solid rgba(255,255,255,.03);
+}
+
+.fighter{ position:absolute; bottom:8%; width:38%; display:flex; align-items:flex-end; gap:8px; z-index:3; }
+.fighter.player{ left:3%; }
+.fighter.enemy{ right:3%; flex-direction:row-reverse; }
+.fighter .f-sprite{ flex:1 1 auto; min-width:0; }
+.fighter .f-sprite svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 12px 20px rgba(0,0,0,.6)); }
+.fighter.hurt .f-sprite{ animation: hurt .3s; }
+.fighter.hurt .f-sprite svg{ filter:drop-shadow(0 0 16px var(--crimson2)) brightness(1.6); }
+@keyframes hurt{ 0%,100%{transform:none; filter:none} 30%{transform:translateX(-8px)} 60%{transform:translateX(6px)} }
+.fighter.attacking .f-sprite{ animation: lunge .3s ease; }
+.fighter.enemy.attacking .f-sprite{ animation: lungeR .3s ease; }
+@keyframes lunge{ 50%{ transform:translateX(26px) scale(1.03);} }
+@keyframes lungeR{ 50%{ transform:translateX(-26px) scale(1.03);} }
+
+.f-panel{ width:min(230px,52%); display:flex; flex-direction:column; gap:5px; }
+.fighter.enemy .f-panel{ text-align:right; }
+.f-name{ font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; display:flex; gap:6px; align-items:baseline; }
+.fighter.enemy .f-name{ justify-content:flex-end; }
+.f-lv{ font-size:.66rem; color:var(--ash); }
+.f-faction{ font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ash2); }
+.status-row{ display:flex; gap:4px; flex-wrap:wrap; }
+.fighter.enemy .status-row{ justify-content:flex-end; }
+.st{
+  font-size:.6rem; letter-spacing:.06em; text-transform:uppercase; padding:1px 6px;
+  border:1px solid currentColor; background:rgba(0,0,0,.4);
+}
+.st.sangramento{ color:#ff5a72; }
+.st.atordoado{ color:var(--warn); }
+.st.exposto{ color:#fff; }
+.st.ferrugem{ color:#b06a3a; }
+.st.coagulo{ color:#6f8bff; }
+.st.derretido{ color:var(--orange); }
+.st.postura{ color:var(--cyan); }
+
+@media (max-width:700px){
+  .f-panel{ width:58%; }
+  .fighter{ bottom:6%; width:46%; }
+}
+
+/* ---------------- CENTRO / INTENÇÃO ---------------- */
+.b-center{
+  position:absolute; left:50%; top:10px; transform:translateX(-50%);
+  z-index:4; display:flex; flex-direction:column; align-items:center; gap:6px; width:min(460px,86%);
+}
+.intent{
+  border:1px solid var(--line2); background:rgba(12,7,9,.86); padding:7px 14px;
+  font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; text-align:center;
+  display:flex; gap:9px; align-items:center; justify-content:center;
+}
+.intent .ico{ font-size:1rem; }
+.intent.parryable{ border-color:#2c4d6b; }
+.intent.unparryable{ border-color:#7a5a1d; }
+.intent.inevitable{ border-color:var(--crimson); color:#ffb3bd; animation: pulseBad 1.1s infinite; }
+@keyframes pulseBad{ 50%{ box-shadow:0 0 22px rgba(255,60,80,.4);} }
+.dist-badge{ font-size:.66rem; letter-spacing:.2em; color:var(--ash); text-transform:uppercase; }
+.dist-badge .d-perto{ color:var(--crimson2); }
+.dist-badge .d-longe{ color:var(--blue); }
+.dist-badge .d-medio{ color:var(--ash); }
+
+/* ---------------- STYLE METER ---------------- */
+.style-meter{
+  position:absolute; right:18px; top:86px; z-index:4; width:10px; height:150px;
+  border:1px solid var(--line); background:rgba(0,0,0,.5); display:flex; align-items:flex-end;
+}
+.style-meter i{ display:block; width:100%; height:0%; background:linear-gradient(0deg,#6b4a10,var(--brass)); transition:height .3s; }
+.style-rank{
+  position:absolute; right:12px; top:64px; z-index:4;
+  font-size:.8rem; letter-spacing:.1em; color:var(--brass); text-transform:uppercase;
+  font-weight:800; text-shadow:0 0 12px rgba(0,0,0,.9);
+}
+@media (max-width:700px){ .style-meter,.style-rank{ display:none; } }
+
+/* ---------------- LOG ---------------- */
+.b-log{
+  min-height:76px; max-height:76px; overflow:hidden; padding:8px 14px;
+  border-bottom:1px solid var(--line); background:#0d0809; font-size:.78rem;
+  display:flex; flex-direction:column; gap:2px; justify-content:flex-end;
+}
+.b-log div{ color:var(--ash); }
+.b-log div:last-child{ color:var(--bone); }
+.b-log .hl{ color:#ff9db0; }
+.b-log .ok{ color:var(--ok); }
+.b-log .warn{ color:var(--warn); }
+
+/* ---------------- CONTROLES ---------------- */
+.b-controls{
+  padding:10px 12px 14px; background:linear-gradient(180deg,#140b0e,#0a0708);
+  display:grid; grid-template-columns: 1fr auto; gap:10px; align-items:stretch;
+}
+@media (max-width:820px){ .b-controls{ grid-template-columns:1fr; } }
+
+.moves{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+@media (max-width:820px){ .moves{ grid-template-columns:repeat(2,1fr); } }
+.mv{
+  position:relative; min-height:76px; text-align:left; padding:8px 10px 8px 14px;
+  background:linear-gradient(180deg,#241519,#160d10); border:1px solid var(--line2);
+  color:var(--bone); font-family:var(--font-mono); cursor:pointer; overflow:hidden;
+  display:flex; flex-direction:column; gap:3px; transition:transform .08s, border-color .15s, background .15s;
+}
+.mv::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--tcolor, var(--ash2)); }
+.mv:hover:not(:disabled){ transform:translateY(-2px); border-color:var(--crimson); background:linear-gradient(180deg,#331b22,#1c1014); }
+.mv:disabled{ opacity:.4; cursor:not-allowed; }
+.mv .mv-top{ display:flex; align-items:center; justify-content:space-between; gap:6px; }
+.mv .mv-name{ font-size:.8rem; letter-spacing:.04em; }
+.mv .mv-type{ font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--tcolor); }
+.mv .mv-foot{ display:flex; gap:8px; font-size:.64rem; color:var(--ash); flex-wrap:wrap; }
+.mv .mv-foot .b{ color:var(--crimson2); }
+.mv .cd-overlay{
+  position:absolute; inset:0; background:rgba(6,4,5,.78); display:grid; place-items:center;
+  font-size:1.4rem; color:var(--ash); letter-spacing:.1em;
+}
+.mv.charged{ border-color:var(--orange); box-shadow:0 0 16px rgba(255,157,46,.25) inset; }
+
+.aux{ display:flex; flex-direction:column; gap:6px; min-width:118px; }
+@media (max-width:820px){ .aux{ flex-direction:row; flex-wrap:wrap; } }
+.aux .btn{ flex:1 1 auto; }
+
+/* ---------------- PARRY ---------------- */
+.parry-layer{
+  position:absolute; inset:0; z-index:60; display:none; place-items:center;
+  background:rgba(4,2,3,.55); backdrop-filter:blur(1px);
+}
+.parry-layer.on{ display:grid; }
+.parry-box{ width:min(520px,86%); text-align:center; }
+.parry-title{ font-size:.86rem; letter-spacing:.28em; text-transform:uppercase; color:#bfe0ff; margin-bottom:8px; }
+.parry-track{
+  position:relative; height:26px; background:#0b0709; border:1px solid var(--line2); overflow:hidden;
+}
+.parry-good{ position:absolute; top:0; bottom:0; background:rgba(240,180,41,.25); }
+.parry-good.left{ }
+.parry-good.right{ }
+.parry-perfect{ position:absolute; top:0; bottom:0; width:14%; background:rgba(87,214,139,.4); box-shadow:0 0 18px rgba(87,214,139,.5); }
+.parry-marker{ position:absolute; top:-2px; bottom:-2px; width:4px; background:#fff; box-shadow:0 0 12px #fff; transform:translateX(-2px); }
+.parry-hint{ margin-top:8px; font-size:.72rem; letter-spacing:.16em; color:var(--ash); text-transform:uppercase; }
+.parry-result{ margin-top:10px; font-size:1.1rem; letter-spacing:.24em; text-transform:uppercase; }
+.parry-result.perfect{ color:var(--ok); text-shadow:0 0 22px rgba(87,214,139,.6); }
+.parry-result.good{ color:var(--warn); }
+.parry-result.miss{ color:var(--bad); }
+
+/* ---------------- NÚMEROS DE DANO ---------------- */
+.dmg{
+  position:absolute; z-index:20; font-weight:800; font-size:1.4rem; pointer-events:none;
+  text-shadow:0 2px 6px #000; animation: dmgFloat 1s ease-out forwards;
+}
+.dmg.player{ color:#ffd0d8; }
+.dmg.enemy{ color:#fff; }
+.dmg.crit{ color:var(--warn); font-size:1.9rem; }
+.dmg.heal{ color:var(--ok); }
+@keyframes dmgFloat{
+  0%{ transform:translate(-50%,0) scale(.7); opacity:0; }
+  20%{ transform:translate(-50%,-14px) scale(1.15); opacity:1; }
+  100%{ transform:translate(-50%,-70px) scale(1); opacity:0; }
+}
+.splatter{
+  position:absolute; z-index:19; pointer-events:none; font-size:1.6rem; opacity:.9;
+  animation: splat .8s ease-out forwards;
+}
+@keyframes splat{ 0%{opacity:0; transform:scale(.4)} 30%{opacity:.95; transform:scale(1.2)} 100%{opacity:0; transform:scale(1.5) translateY(30px)} }
+
+/* ---------------- RESULTADO DE TURNO ---------------- */
+.turn-flash{ position:absolute; inset:0; z-index:30; pointer-events:none; opacity:0; background:var(--crimson); }
+.turn-flash.on{ animation: tflash .3s ease-out; }
+@keyframes tflash{ 0%{opacity:.4} 100%{opacity:0} }
