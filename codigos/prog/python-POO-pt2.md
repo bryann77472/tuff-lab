@@ -1,14 +1,14 @@
 # POO Parte 2, exercícios
 ## Exercícios
-  1. Herança Crie uma classe Pessoa com o atributo nome. Depois crie as classes Aluno e Professor, que devem herdar de Pessoa.
+  1. Crie uma classe Pessoa com o atributo nome. Depois crie as classes Aluno e Professor, que devem herdar de Pessoa.
 
-  2. Encapsulamento Crie uma classe ContaBancaria com o saldo protegido. Implemente os métodos depositar(valor), sacar(valor) e consultarSaldo(), impedindo o acesso direto ao saldo.
+  2. Crie uma classe ContaBancaria com o saldo protegido. Implemente os métodos depositar(valor), sacar(valor) e consultarSaldo(), impedindo o acesso direto ao saldo.
 
-  3. Polimorfismo Crie uma classe Animal com o método emitirSom(). Depois crie as classes Cachorro e Gato, cada uma implementando o método de forma diferente.
+  3. Crie uma classe Animal com o método emitirSom(). Depois crie as classes Cachorro e Gato, cada uma implementando o método de forma diferente.
 
-  4. Abstração Crie uma classe abstrata Forma com o método calcularArea(). Depois crie as classes Retangulo e Circulo, cada uma implementando seu próprio cálculo de área.
+  4. Crie uma classe abstrata Forma com o método calcularArea(). Depois crie as classes Retangulo e Circulo, cada uma implementando seu próprio cálculo de área.
 
-  5. Projeto integrando os quatro pilares Desenvolva um pequeno sistema com as classes Pessoa, Aluno e Professor, aplicando:
+  5. Desenvolva um pequeno sistema com as classes Pessoa, Aluno e Professor, aplicando:
 
 - Herança (Aluno e Professor herdando de Pessoa);
 - Encapsulamento (algum atributo privado/protegido com métodos de acesso);
