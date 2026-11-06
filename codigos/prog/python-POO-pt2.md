@@ -1,10 +1,41 @@
+# POO Parte 2, exercícios
+## Exercícios
+  1. Herança Crie uma classe Pessoa com o atributo nome. Depois crie as classes Aluno e Professor, que devem herdar de Pessoa.
 
+  2. Encapsulamento Crie uma classe ContaBancaria com o saldo protegido. Implemente os métodos depositar(valor), sacar(valor) e consultarSaldo(), impedindo o acesso direto ao saldo.
+
+  3. Polimorfismo Crie uma classe Animal com o método emitirSom(). Depois crie as classes Cachorro e Gato, cada uma implementando o método de forma diferente.
+
+  4. Abstração Crie uma classe abstrata Forma com o método calcularArea(). Depois crie as classes Retangulo e Circulo, cada uma implementando seu próprio cálculo de área.
+
+  5. Projeto integrando os quatro pilares Desenvolva um pequeno sistema com as classes Pessoa, Aluno e Professor, aplicando:
+
+- Herança (Aluno e Professor herdando de Pessoa);
+- Encapsulamento (algum atributo privado/protegido com métodos de acesso);
+- Polimorfismo (um método sobrescrito de forma diferente em Aluno e Professor);
+- Abstração (uma classe abstrata ou interface definindo um contrato comum).
+## Códigos
+
+**Ex. 1**
+
+PYTHON
+```python
+class Pessoa:
   def __init__(self, nome, idade):
     self.nome = nome
     self.idade = idade
+class Aluno(Pessoa):
+  def __init__(self, nome, idade, materia):
+    super().__init__(nome, idade)
+    self.materia = materia
+class Professor(Pessoa):
+  def __init__(self, nome, idade, materia):
+    super().__init__(nome, idade)
+    self.materia = materia
 
-pessoa1 = pessoa("Rogério", 55)
-print(f"Pessoa: {pessoa1.nome}, idade: {pessoa1.idade}")
+prof1 = Professor("César", 35, "Prog.")
+aluno1 = Aluno("Renan", 15, "Prog.")
+print("Professor e aluno:", prof1.nome, aluno1.nome)
 ```
 **Ex. 2**
 
