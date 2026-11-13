@@ -21,14 +21,19 @@
 PYTHON
 ```python
 class Pessoa:
+
   def __init__(self, nome, idade):
     self.nome = nome
     self.idade = idade
+
 class Aluno(Pessoa):
+
   def __init__(self, nome, idade, materia):
     super().__init__(nome, idade)
     self.materia = materia
+
 class Professor(Pessoa):
+
   def __init__(self, nome, idade, materia):
     super().__init__(nome, idade)
     self.materia = materia
@@ -36,64 +41,125 @@ class Professor(Pessoa):
 prof1 = Professor("César", 35, "Prog.")
 aluno1 = Aluno("Renan", 15, "Prog.")
 print("Professor e aluno:", prof1.nome, aluno1.nome)
+
 ```
 **Ex. 2**
 
 PYTHON
 ```python
-class Produto:
+print("Somente inteiros permitidos")
+carteira = 0
+class Conta:
+  
+  def __init__(self, saldoini = 0):
+    self.__saldo = saldoini
 
-    def __init__(self, nome, preco, estoque):
-        self.nome = nome
-        self.preco = preco
-        self.estoque = estoque
+  def depositar(self, valor):
+    global carteira
+    
+    if valor <= 0:
+      print("Valor inválido, tente novamente.")
+    elif carteira < valor:
+      print("Você não tem dinheiro suficiente, tente novamente.")
+    else:
+      self.__saldo += valor
+      carteira -= valor
+      print("Depositado", valor, "com sucesso, novo saldo", self.__saldo, "carteira", carteira)
       
-Produto1 = Produto("Escova de dente", 3.50, 3)
-print(f"Nome produto: {Produto1.nome}, Preço: {Produto1.preco}, Estoque: {Produto1.estoque}")
+  def sacar(self, valor):
+    global carteira
+    
+    if valor <= 0:
+      print("Valor inválido, tente novamente.")
+    elif valor > self.__saldo:
+      print("Você não tem dinheiro suficiente pra sacar este valor, tente novamente.")
+    else:
+      self.__saldo -= valor
+      carteira += valor
+      print("Você sacou", valor, "com sucesso, adicionado à carteira, novo saldo", self.__saldo, "carteira", carteira)
+  
+  def consultar(self):
+    print("Atualmente no banco tem:", self.__saldo, "carteira:", carteira)
 
-Produto2 = Produto("Pasta de dente", 6.50, 6)
-print(f"Nome produto: {Produto2.nome}, Preço: {Produto2.preco}, Estoque: {Produto2.estoque}")
+banco = Conta()
+while True:
+  print("[1] Depositar [2] Sacar [3] Consulta [4] Inserir Dinheiro")
+  escolha = int(input("> "))
+  match escolha:
+    case 1:
+      valor1 = int(input("Valor: "))
+      banco.depositar(valor1)
+      
+    case 2:
+      valor1 = int(input("Valor: "))
+      banco.sacar(valor1)
+
+    case 3:
+      banco.consultar()
+
+    case 4:
+      valor1 = int(input("Valor: "))
+      carteira += valor1
+
+    case _:
+      print("Inválido.")
 
 ```
 **Ex. 3**
 
 PYTHON
 ```python
-class Aluno:
+class Animal:
+  def som(self):
+    print("*Barulhos de animal.")
 
-    def __init__(self, nome, nota):
-        self.nome = nome
-        self.nota = nota
-nomeA = input("Nome do aluno: ")
-notaA = float(input("Nota do Aluno: "))
-aluno1 = Aluno(nomeA, notaA)
+class Gato(Animal):
+  def som(self):
+    print("Miau!")
 
-print(f"O aluno(a) foi aprovado com {aluno1.nota}" if aluno1.nota >= 6 else f"O aluno(a) foi reprovado com {aluno1.nota}")
+class Cao(Animal):
+  def som(self):
+    print("Au Au!")
 
-# Preferi não usar.
-# print(f"Aprovado? {bool(aluno1.nota >=6)}")
+dogao = Cao()
+gatao = Gato()
+
+gatao.som()
+dogao.som()
+
 ```
 
 **Ex. 4**
 
 PYTHON
 ```python
-class retangulo:
+from abc import ABC, abstractmethod
 
+class Forma(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+      
+class Retangulo(Forma):
   def __init__(self, largura, altura):
-        self.largura = largura
-        self.altura = altura
+      self.largura = largura
+      self.altura = altura
 
-  def calcular_perimetro(self):
-        return  2 * (self.largura + self.altura)
+  def area(self):
+    print("Area do retangulo:", self.largura * self.altura)
 
-larguraobj = float(input("Largura: "))
-alturaobj = float(input("Altura: "))
+class Circulo(Forma):
+  def __init__(self, raio):
+    self.raio = raio
 
-retangulo = retangulo(larguraobj, alturaobj)
-perimetro = retangulo.calcular_perimetro()
+  def area(self):
+    print("Area do circulo:", 3.14*(self.raio * self.raio))
 
-print(f"Largura: {retangulo.largura}, Altura: {retangulo.altura}, Perimetro: {perimetro}")
+circulo = Circulo(4)
+retangulo = Retangulo(2,4)
+
+retangulo.area()
+circulo.area()
 
 ```
 
@@ -101,23 +167,46 @@ print(f"Largura: {retangulo.largura}, Altura: {retangulo.altura}, Perimetro: {pe
 
 PYTHON
 ```python
-class conta_bancaria:
-  def __init__(self, saldo):
-    self.__saldo = saldo
+from abc import ABC, abstractmethod
 
-  def depositar(self, valor):
-    if valor > 0:
-      self.__saldo += valor
-      print(f"Depositado {valor} com sucesso.")
-    else:
-      print("Valor inválido")
+class Pessoa(ABC):
 
-  def consultar(self):
-    return self.__saldo
+    def __init__(self, nome, idade):
+        self.__nome = nome
+        self.__idade = idade
 
-conta = conta_bancaria(100)
-deposito = float(input("Valor a depositar: "))
-conta.depositar(deposito)
+    def name(self):
+        return self.__nome
 
-print(f"Valor da conta: {conta.consultar()}")
+    def age(self):
+        return self.__idade
+
+    @abstractmethod
+    def falar(self):
+        pass
+
+class Aluno(Pessoa):
+
+    def __init__(self, nome, idade, materia):
+        super().__init__(nome, idade)
+        self.materia = materia
+
+    def falar(self):
+        print(f"Olá, eu sou {self.name()}, tenho {self.age()} anos, atualmente estudo {self.materia}!!")
+
+class Prof(Pessoa):
+
+    def __init__(self, nome, idade, materia):
+        super().__init__(nome, idade)
+        self.materia = materia
+
+    def falar(self):
+        print(f"Oi, meu nome é {self.name()} e estou com {self.age()} anos, eu dou aulas sobre {self.materia}.")
+
+prof1 = Prof("César", 35, "Programação")
+aluno1 = Aluno("Bryan", 15, "Programação")
+
+aluno1.falar()
+prof1.falar()
+
 ```
